@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الصفحة الرئيسية</title>
+
+  <!-- أداء أفضل لتحميل الخط -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- خط جميل من جوجل (Cairo) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- فافيكون (يمكن استبداله بملفك) -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- ===================== NEW: SEO & Social ===================== -->
+  <meta name="description" content="مدونة حسام غريبي (Hosam Ghribi): مقالات حول الشبكات، الهوت سبوت، والتقنية.">
+  <meta name="robots" content="index,follow">
+  <meta name="author" content="حسام غريبي (Hosam Ghribi)">
+  <link rel="canonical" href="https://hosamgrebe.github.io/H-blog/">
+  <meta name="theme-color" content="#0f172a">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_AR">
+  <meta property="og:title" content="مدونة حسام غريبي | Hosam Ghribi">
+  <meta property="og:description" content="محتوى عن الشبكات، الهوت سبوت، والتقنية.">
+  <meta property="og:url" content="https://hosamgrebe.github.io/H-blog/">
+  <!-- غيّر مسار الصورة إن كان لديك صورة غلاف -->
+  <meta property="og:image" content="https://hosamgrebe.github.io/H-blog/assets/cover.jpg">
+  <meta property="og:site_name" content="مدونة حسام غريبي">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="مدونة حسام غريبي | Hosam Ghribi">
+  <meta name="twitter:description" content="محتوى عن الشبكات، الهوت سبوت، والتقنية.">
+  <meta name="twitter:image" content="https://hosamgrebe.github.io/H-blog/assets/cover.jpg">
+
+  <!-- hreflang (إنشاء إشارة للغة الأساسية) -->
+  <link rel="alternate" href="https://hosamgrebe.github.io/H-blog/" hreflang="ar">
+  <link rel="alternate" href="https://hosamgrebe.github.io/H-blog/" hreflang="x-default">
+
+  <!-- Structured Data: Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "حسام غريبي",
+    "alternateName": ["Hosam Ghribi", "Hossam Ghribi", "Hosam Grebi"],
+    "url": "https://hosamgrebe.github.io/H-blog/",
+    "sameAs": [
+      "https://github.com/hosamgrebe"
+      /* أضف روابطك الاجتماعية هنا (LinkedIn, X, Facebook) */
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: WebSite + SearchAction (اختياري) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"مدونة حسام غريبي",
+    "url":"https://hosamgrebe.github.io/H-blog/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://hosamgrebe.github.io/H-blog/?q={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+  <!-- =================== /NEW: SEO & Social ====================== -->
+
+  <style>
+    :root{
+      --bg1:#0f172a;   /* أزرق غامق مائل للكحلي */
+      --bg2:#1d2843;
+      --accent1:#22c55e; /* أخضر هادئ */
+      --accent2:#38bdf8; /* سماوي */
+      --accent3:#a855f7; /* بنفسجي ناعم */
+      --text-main:#f9fafb;
+      --text-soft:#e5e7eb;
+      --card-bg:rgba(15,23,42,0.7);
+      --card-border:rgba(148,163,184,0.4);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:'Cairo',sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      color:var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,0.35), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(168,85,247,0.35), transparent 55%),
+        radial-gradient(circle at top right, rgba(34,197,94,0.35), transparent 55%),
+        linear-gradient(135deg,var(--bg1),var(--bg2));
+      background-size:160% 160%;
+      animation:bgMove 18s ease-in-out infinite;
+      overflow:hidden;
+    }
+
+    @keyframes bgMove{
+      0%{background-position:0% 0%;}
+      50%{background-position:100% 100%;}
+      100%{background-position:0% 0%;}
+    }
+
+    .wrapper{
+      width:100%;
+      max-width:650px;
+      position:relative;
+    }
+
+    .glow-orb{
+      position:absolute;
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      filter:blur(45px);
+      opacity:0.7;
+      z-index:-1;
+      pointer-events:none;
+    }
+    .orb1{background:var(--accent2);top:-80px;left:-40px;}
+    .orb2{background:var(--accent3);bottom:-80px;right:-40px;}
+
+    /* حركة بسيطة للأجرام المضيئة */
+    @keyframes orbMove {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(30px, -20px); }
+      100% { transform: translate(0, 0); }
+    }
+    .orb1, .orb2 { animation: orbMove 12s ease-in-out infinite alternate; }
+
+    .card{
+      border-radius:26px;
+      padding:40px 28px 32px;
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      box-shadow:
+        0 18px 45px rgba(15,23,42,0.8),
+        0 0 0 1px rgba(15,23,42,0.9);
+      backdrop-filter:blur(18px);
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:conic-gradient(
+        from 140deg,
+        rgba(56,189,248,0.5),
+        rgba(168,85,247,0.6),
+        rgba(34,197,94,0.5),
+        rgba(56,189,248,0.5)
+      );
+      opacity:0;
+      transition:opacity .4s ease;
+      z-index:-1;
+    }
+
+    .card:hover::before{ opacity:0.35; }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding:6px 14px;
+      font-size:13px;
+      color:var(--text-soft);
+      background:rgba(15,23,42,0.9);
+      border:1px solid rgba(148,163,184,0.5);
+      margin-bottom:18px;
+    }
+
+    .badge-dot{
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:radial-gradient(circle,var(--accent1),var(--accent2));
+      box-shadow:0 0 12px rgba(34,197,94,0.9);
+    }
+
+    h1{
+      font-size:clamp(26px,5vw,34px);
+      margin-bottom:10px;
+    }
+
+    .subtitle{
+      font-size:clamp(18px,3.2vw,22px);
+      font-weight:600;
+      margin-bottom:14px;
+      background:linear-gradient(90deg,var(--accent2),var(--accent3));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      /* تأثير كتابة تدريجي */
+      display:inline-block;
+      overflow:hidden;
+      white-space:nowrap;
+      border-right:3px solid var(--accent2);
+      animation: typing 3s steps(25, end), blink .8s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .status{
+      font-size:15px;
+      color:var(--text-soft);
+      margin-bottom:28px;
+      opacity:0.9;
+    }
+
+    .enter-btn{
+      position:relative;
+      background:linear-gradient(135deg,var(--accent2),var(--accent3));
+      color:white;
+      font-size:17px;
+      font-weight:700;
+      padding:13px 38px;
+      border:none;
+      border-radius:999px;
+      cursor:pointer;
+      transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+      box-shadow:0 16px 34px rgba(56,189,248,.45);
+      outline:none;
+    }
+
+    .enter-btn::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius:inherit;
+      border:1px solid rgba(248,250,252,0.45);
+      opacity:0.7;
+      pointer-events:none;
+    }
+
+    .enter-btn:hover{
+      transform:translateY(-2px) scale(1.03);
+      box-shadow:0 24px 50px rgba(56,189,248,.55);
+      filter:brightness(1.05);
+    }
+
+    .enter-btn:active{
+      transform:translateY(0) scale(0.98);
+      box-shadow:0 10px 20px rgba(15,23,42,.9);
+      filter:brightness(.98);
+    }
+
+    .designer-text{
+      margin-top:26px;
+      font-size:15px;
+      color:var(--text-soft);
+      letter-spacing:0.5px;
+    }
+
+    .designer-text span{
+      font-weight:800;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    /* نقطة مضيئة صغيرة تتحرّك */
+    .floating-dot{
+      position:absolute;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--accent2);
+      box-shadow:0 0 18px rgba(56,189,248,1);
+      animation:floatDot 6s ease-in-out infinite;
+      top:12%;
+      right:12%;
+      opacity:.9;
+    }
+
+    @keyframes floatDot{
+      0%{transform:translate(0,0);} 50%{transform:translate(-18px,14px);} 100%{transform:translate(0,0);}
+    }
+
+    @media (max-width:480px){
+      .card{ padding:28px 18px 24px; }
+      .designer-text{ font-size:14px; }
+    }
+
+    /* احترام تفضيلات المستخدم لتقليل الحركة */
+    @media (prefers-reduced-motion: reduce) {
+      body { animation: none; }
+      .orb1, .orb2, .floating-dot, .subtitle { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="glow-orb orb1" aria-hidden="true"></div>
+    <div class="glow-orb orb2" aria-hidden="true"></div>
+
+    <div class="card">
+      <div class="floating-dot" aria-hidden="true"></div>
+
+      <div class="badge" role="status" aria-live="polite">
+        <div class="badge-dot" aria-hidden="true"></div>
+        <span>بسم الله الرحمن الرحيم</span>
+      </div>
+
+      <h1>أهلاً بكم في مدونة حسام غريبي</h1>
+      <div class="subtitle">المدونة قيد الإنشاء حاليًا</div>
+      <p class="status">
+        جاري تجهيز محتوى مميز عن الشبكات، الهوت سبوت، والتقنية بشكل عام.<br>
+        يمكنك الدخول الآن .
+      </p>
+
+      <button class="enter-btn" aria-label="الدخول إلى الصفحة الرئيسية" onclick="location.href='‏‏main.html'">
+        اضغط للدخول
+      </button>
+
+      <div class="designer-text">
+        <span>لا تَنْسَ ذِكْرَ الله</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NEW: تحسين إمكانية الوصول (لمن يوقف CSS/JS) ================= -->
+  <noscript><!-- NEW -->
+    هذه الصفحة تستخدم بعض التأثيرات، لكنها تعمل بدون الجافاسكربت. يمكنك الدخول إلى
+    <a href="main.html">الصفحة الرئيسية</a>.
+  </noscript>
+  <!-- =============== /NEW =============== -->
+
+</body>
+</html>

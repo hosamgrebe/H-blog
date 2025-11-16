@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<title>مولد الكروت - مدونة حسام غريبي</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root{
+  --bg1:#0f172a; --bg2:#1d2843;
+  --glass:#0b1220cc;
+  --border:rgba(148,163,184,.35);
+  --text:#f3f4f6; --text-soft:#cbd5e1;
+  --c1:#38bdf8; --c2:#a855f7; --c3:#22c55e;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Tajawal",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  background:
+    radial-gradient(70rem 50rem at -20% -20%, rgba(56,189,248,.25), transparent 60%),
+    radial-gradient(60rem 40rem at 120% 120%, rgba(168,85,247,.25), transparent 60%),
+    linear-gradient(135deg,var(--bg1),var(--bg2));
+  background-attachment:fixed;
+  padding:18px;
+}
+
+/* ====== NAVBAR ====== */
+.navbar{
+  max-width:1200px; margin:0 auto 18px; padding:10px 16px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  background:rgba(15,23,42,.85); border:1px solid var(--border); backdrop-filter:blur(18px);
+  border-radius:20px; box-shadow:0 12px 30px rgba(2,6,23,.7);
+}
+.nav-title{font-weight:800;color:#60a5fa;font-size:18px}
+.nav-links{display:flex;gap:10px;flex-wrap:wrap}
+.nav-link{
+  display:inline-block;padding:8px 16px;border-radius:999px;text-decoration:none;color:#e5e7eb;
+  border:1px solid rgba(148,163,184,.55); background:rgba(2,6,23,.35); transition:.2s
+}
+.nav-link:hover{border-color:var(--c1); color:#fff}
+.nav-link.active{
+  background:linear-gradient(90deg,var(--c1),var(--c2)); color:#fff; border-color:transparent;
+  box-shadow:0 10px 26px rgba(56,189,248,.4)
+}
+
+/* ====== WRAPPER ====== */
+.shell{
+  max-width:1200px; margin:0 auto; border-radius:24px; padding:18px 18px 22px;
+  background:rgba(15,23,42,.75); border:1px solid var(--border); backdrop-filter:blur(18px);
+  box-shadow:0 18px 45px rgba(2,6,23,.65);
+}
+
+/* ====== Headings ====== */
+.page-heading{
+  position:relative;
+  text-align:center;
+  font-weight:800;
+  line-height:1.2;
+  margin:6px 0 18px;
+  font-size:clamp(22px,4.2vw,34px);
+  background:linear-gradient(90deg,var(--c1),var(--c2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 8px 26px rgba(56,189,248,.18);
+  letter-spacing:.25px;
+}
+.page-heading::after{
+  content:""; position:absolute; inset-inline:0; bottom:-6px; margin-inline:auto;
+  width:min(180px,42%); height:4px; border-radius:999px;
+  background:linear-gradient(90deg,rgba(56,189,248,.9),rgba(168,85,247,.9));
+  box-shadow:0 6px 22px rgba(56,189,248,.35);
+}
+.page-sub{color:var(--text-soft); text-align:center; margin:0 0 14px; font-size:clamp(13px,2.2vw,15px)}
+
+/* ====== Grid ====== */
+.grid{display:grid; grid-template-columns:1.1fr .9fr; gap:14px}
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+
+/* ====== Cards ====== */
+.card{
+  background:var(--glass); border:1px solid var(--border); border-radius:18px; padding:14px;
+  box-shadow:0 18px 40px rgba(2,6,23,.55)
+}
+.card h2{
+  position:relative;
+  margin:0 0 14px;
+  color:#eaf2ff;
+  font-weight:800;
+  font-size:clamp(15px,2.4vw,18px);
+  display:flex; align-items:center; gap:8px;
+  letter-spacing:.2px;
+  text-shadow:0 5px 18px rgba(56,189,248,.15);
+}
+.card h2::before{
+  content:""; width:12px; height:12px; border-radius:999px;
+  background:linear-gradient(135deg,var(--c1),var(--c2));
+  box-shadow:0 0 0 3px rgba(56,189,248,.18) inset, 0 0 14px rgba(56,189,248,.35);
+}
+.card h2::after{
+  content:""; position:absolute; bottom:-6px; right:0; width:84px; height:3px; border-radius:999px;
+  background:linear-gradient(90deg,rgba(56,189,248,.9),rgba(168,85,247,.9));
+  box-shadow:0 4px 16px rgba(168,85,247,.35);
+}
+
+/* Inputs */
+.row{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:.75rem;align-items:center}
+label{color:var(--text-soft); font-size:.95rem}
+input[type=file],input[type=text],textarea{
+  background:rgba(15,23,42,.6); border:1px solid var(--border); color:#fff; border-radius:12px;
+  padding:.45rem .75rem; outline:none; font-size:.92rem
+}
+textarea{width:100%; resize:none}
+input[type=file]{width:100%}
+input[type=file]::file-selector-button{
+  border:none;border-radius:999px;padding:.35rem .9rem;margin-inline-end:.6rem;
+  background:linear-gradient(135deg,var(--c1),var(--c2)); color:#fff; cursor:pointer; font-size:.85rem
+}
+
+/* Buttons */
+button{border:none;border-radius:999px;padding:.6rem 1.1rem;font-size:.92rem;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem}
+button.primary{background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff; box-shadow:0 12px 28px rgba(56,189,248,.35)}
+button.ghost{background:transparent;border:1px solid var(--border);color:#fff}
+
+/* Switch / sliders */
+.switch{display:inline-flex;align-items:center;gap:.45rem;color:var(--text-soft)}
+.switch input{accent-color:var(--c2); width:18px;height:18px}
+.slider-group{display:flex;flex-direction:column;gap:.25rem;flex:1 1 150px;color:var(--text-soft);font-size:.9rem}
+.slider-group input[type=range]{width:100%;accent-color:var(--c1)}
+.status{font-size:.85rem;color:#22c55e}.status.error{color:#fb7185}
+
+/* Preview */
+.preview-wrapper{display:flex;flex-direction:column;gap:.75rem;align-items:center}
+.card-preview{
+  position:relative;width:320px;height:200px;border-radius:14px;overflow:hidden;
+  background:radial-gradient(circle at top,#0ea5e9 0,#0f172a 55%);
+  border:1px solid rgba(148,163,184,.6);cursor:grab
+}
+.card-preview.empty::after{
+  content:"قم برفع صورة قالب البطاقة من الجهة اليسرى";position:absolute;inset:0;display:flex;
+  align-items:center;justify-content:center;color:#9ca3af;text-align:center;padding:1rem
+}
+.card-bg{position:absolute;inset:0} .card-bg img{width:100%;height:100%;object-fit:cover;display:block}
+.draggable-text{
+  position:absolute;padding:.1rem .3rem;color:#fff;font-size:.95rem;cursor:move;user-select:none;
+  transform:translate(-50%,-50%);text-shadow:0 0 4px rgba(15,23,42,.9)
+}
+.barcode-wrapper{position:absolute;display:flex;justify-content:center;align-items:center;width:72px;height:72px;transform:translate(-50%,-50%);background:rgba(15,23,42,.5);border-radius:.4rem}
+.barcode-wrapper>div{width:100%;height:100%;background:#fff;border-radius:.25rem;padding:2px}
+.small-note{color:#9ca3af; font-size:.9rem}
+
+/* Print */
+#printArea{display:none}
+.print-page{width:210mm;height:297mm;page-break-after:always}
+.sheet-img{width:100%;height:100%;display:block}
+@page{size:A4;margin:0}
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff!important;padding:0}
+  .navbar,.footer,.shell{display:none!important}
+  #printArea{display:block!important}
+}
+
+/* ====== Modals ====== */
+.backdrop{position:fixed;inset:0;background:rgba(2,6,23,.7);display:none;align-items:center;justify-content:center;z-index:9999}
+.modal{width:min(92vw,520px);background:#0b1220;border:1px solid var(--border);border-radius:16px;color:#e5e7eb;padding:16px;box-shadow:0 30px 70px rgba(0,0,0,.6)}
+.modal h3{
+  margin:.2rem 0 .6rem;font-size:clamp(15px,2.6vw,18px);font-weight:800;color:#fff;position:relative;
+}
+.modal h3::after{
+  content:""; position:absolute; bottom:-6px; right:0; width:74px; height:3px; border-radius:999px;
+  background:linear-gradient(90deg,rgba(56,189,248,.9),rgba(168,85,247,.9));
+}
+.modal .desc{color:#cbd5e1;line-height:1.8}
+.modal .close{margin-top:.8rem;background:linear-gradient(135deg,var(--c1),var(--c2));border:none;color:#fff;padding:.5rem 1rem;border-radius:999px;cursor:pointer}
+
+/* ====== Footer ====== */
+.footer{
+  max-width:1200px; margin:18px auto 0; padding:16px;
+  background:rgba(15,23,42,.85); border:1px solid var(--border); border-radius:20px;
+  color:var(--text-soft); text-align:center; backdrop-filter:blur(14px); box-shadow:0 -10px 30px rgba(2,6,23,.5)
+}
+.footer strong{color:#fff}
+
+/* ====== MOBILE TUNING ====== */
+@media (max-width:700px){
+  body{padding:10px}
+  .navbar{padding:10px 12px; gap:12px; border-radius:16px}
+  .nav-links{display:grid; grid-template-columns:1fr 1fr; width:100%; gap:10px}
+  .nav-link{width:100%; text-align:center; padding:10px 12px; font-size:14px}
+  .nav-title{font-size:16px}
+  .shell{padding:12px; border-radius:16px}
+  .page-heading{font-size:clamp(20px,7vw,26px); margin:6px 0 10px}
+  .page-heading::after{height:3px; width:56%}
+  .page-sub{font-size:14px}
+  .card{padding:12px; border-radius:14px}
+  .card h2{font-size:16px; margin-bottom:12px}
+  .row{gap:.6rem}
+  .row input[type=text], .row textarea{width:100% !important}
+  input[type=file]{width:100%}
+  .card-preview{width:100%; max-width:360px; height:210px}
+  .barcode-wrapper{width:64px; height:64px}
+  .slider-group{flex:1 1 46%}
+  .footer{padding:12px; font-size:14px; border-radius:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="navbar">
+  <nav class="nav-links">
+    <a class="nav-link" id="contactOpen" href="javascript:void(0)">تواصل معنا</a>
+    <a class="nav-link" id="aboutOpen" href="javascript:void(0)">عن المدونة</a>
+    <a class="nav-link" href="main.html">الصفحة الرئيسية</a>
+    <a class="nav-link" href="‏‏index.html">صفحة الترحيب</a>
+  </nav>
+  <div class="nav-title">الصفحة الرئيسية</div>
+</header>
+
+<!-- CONTENT -->
+<div class="shell">
+  <h1 class="page-heading">مولد كروت الهوت سبوت</h1>
+  <p class="page-sub">أداة لإنشاء كروت هوت سبوت بسرعة وسهولة — تعمل على الكمبيوتر والهاتف.</p>
+
+  <div class="grid">
+    <section class="card">
+      <h2>الإعدادات وملفات الإدخال</h2>
+
+      <div class="row">
+        <div>
+          <label for="excelFile">ملف Excel أو CSV للكروت:</label><br>
+          <input type="file" id="excelFile" accept=".xlsx,.xls,.csv">
+          <div id="excelStatus" class="status"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="templateImage">قالب البطاقة (صورة):</label><br>
+          <input type="file" id="templateImage" accept="image/*">
+          <div id="templateStatus" class="status"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div><label for="networkName">اسم الشبكة على الكرت:</label><br><input type="text" id="networkName" value="الملك" style="width:260px"></div>
+        <div><label for="categoryName">فئة الكرت:</label><br><input type="text" id="categoryName" value="1 جيكا" style="width:260px"></div>
+      </div>
+
+      <div class="row">
+        <label class="switch"><input type="checkbox" id="toggleNetwork" checked> <span>إظهار اسم الشبكة</span></label>
+        <label class="switch"><input type="checkbox" id="toggleCategory" checked> <span>إظهار فئة الكرت</span></label>
+      </div>
+
+      <div class="row"><div style="flex:1 1 100%"><label for="barcodeTemplate">نص رمز QR:</label><br><textarea id="barcodeTemplate" rows="1">{user}:{pass}</textarea></div></div>
+
+      <div class="row">
+        <button id="btnExportPDF" class="ghost">💾 حفظ PDF</button>
+        <button id="btnPreparePrint" class="primary">🖨️ طباعة</button>
+      </div>
+
+      <div class="row">
+        <label class="switch"><input type="checkbox" id="toggleBarcode" checked> <span>إظهار رمز QR</span></label>
+      </div>
+
+      <div class="row">
+        <div class="slider-group"><label for="networkSize">حجم اسم الشبكة:</label><input type="range" id="networkSize" min="10" max="28" value="18"></div>
+        <div class="slider-group"><label for="categorySize">حجم فئة الكرت:</label><input type="range" id="categorySize" min="10" max="28" value="16"></div>
+        <div class="slider-group"><label for="numbersSize">حجم أرقام المستخدم/المرور:</label><input type="range" id="numbersSize" min="10" max="24" value="14"></div>
+        <div class="slider-group"><label for="barcodeSize">حجم رمز QR:</label><input type="range" id="barcodeSize" min="40" max="120" value="72"></div>
+      </div>
+
+      <div class="row">
+        <div class="slider-group"><label for="numberColor">لون نص الأرقام:</label><input type="color" id="numberColor" value="#ffffff"></div>
+        <div class="slider-group"><label for="networkColor">لون اسم الشبكة:</label><input type="color" id="networkColor" value="#ffffff"></div>
+        <div class="slider-group"><label for="categoryColor">لون فئة الكرت:</label><input type="color" id="categoryColor" value="#ffffff"></div>
+      </div>
+
+      <div class="row"><span class="small-note" id="currentCardInfo">لم يتم تحميل بيانات بعد</span></div>
+    </section>
+
+    <section class="card">
+      <h2>معاينة الكرت وتحريك النصوص</h2>
+      <div class="preview-wrapper">
+        <div id="cardPreview" class="card-preview empty">
+          <div class="card-bg"><img id="cardBgImg" alt=""></div>
+
+          <div class="draggable-text" id="networkText" style="top:30px;left:160px;font-weight:800">
+            <span contenteditable="true" id="networkValue">الملك</span>
+          </div>
+
+          <div class="draggable-text" id="categoryText" style="top:58px;left:160px;font-weight:800">
+            <span contenteditable="true" id="categoryValue">1 جيكا</span>
+          </div>
+
+          <div class="draggable-text" id="userNumText" style="top:105px;left:160px;letter-spacing:.08em">
+            <span id="userNumValue">123456</span>
+          </div>
+
+          <div class="draggable-text" id="passNumText" style="top:138px;left:160px;letter-spacing:.08em">
+            <span id="passNumValue">987654</span>
+          </div>
+
+          <div class="barcode-wrapper" id="barcodeWrapper" style="top:135px;left:270px;"><div id="barcode"></div></div>
+        </div>
+
+        <div class="small-note">اسحب مربعات النص والباركود لتعديل أماكنها، واستخدم أشرطة التمرير لتغيير الأحجام.</div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span id="year"></span> © جميع الحقوق محفوظة — <strong>مدونة حسام غريبي</strong>
+</footer>
+
+<!-- PRINT AREA -->
+<div id="printArea"></div>
+
+<!-- ABOUT -->
+<div class="backdrop" id="aboutBackdrop">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3>عن المدونة</h3>
+    <div class="desc">مدونة حسام غريبي مصممة خصيصًا لأصحاب الشبكات لتسهيل العمل وتوفير كل شيء مدفوع هنا مجاني تمامًا.</div>
+    <button class="close" id="aboutClose">إغلاق</button>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="backdrop" id="contactBackdrop">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3>تواصل مع حسام غريبي</h3>
+    <div class="desc">
+      📞 رقم الاتصال السوري: <strong dir="ltr">00963930760718</strong><br>
+      💬 واتساب: <a href="https://wa.me/963930760718" target="_blank" style="color:#38bdf8;text-decoration:none">اضغط هنا للتواصل عبر واتساب</a>
+    </div>
+    <button class="close" id="contactClose">إغلاق</button>
+  </div>
+</div>
+
+<script>
+/* Footer year */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Modals */
+const aboutOpen=document.getElementById('aboutOpen'), contactOpen=document.getElementById('contactOpen');
+const aboutBackdrop=document.getElementById('aboutBackdrop'), contactBackdrop=document.getElementById('contactBackdrop');
+const aboutClose=document.getElementById('aboutClose'), contactClose=document.getElementById('contactClose');
+if(aboutOpen) aboutOpen.onclick=()=>aboutBackdrop.style.display='flex';
+if(contactOpen) contactOpen.onclick=()=>contactBackdrop.style.display='flex';
+[aboutBackdrop,contactBackdrop].forEach(b=>b.addEventListener('click',e=>{ if(e.target===b) b.style.display='none'; }));
+aboutClose.onclick=()=>aboutBackdrop.style.display='none';
+contactClose.onclick=()=>contactBackdrop.style.display='none';
+
+/* ====== Generator code (unchanged logic) ====== */
+let cardsData=[], templateDataURL="", lastRowsRaw=[], headerDetected=false, detectedUserCol=null, detectedPassCol=null;
+const excelInput=document.getElementById("excelFile"), excelStatus=document.getElementById("excelStatus");
+const templateInput=document.getElementById("templateImage"), templateStatus=document.getElementById("templateStatus");
+const cardPreview=document.getElementById("cardPreview"), cardBgImg=document.getElementById("cardBgImg");
+const toggleBarcode=document.getElementById("toggleBarcode"), barcodeWrapper=document.getElementById("barcodeWrapper"), barcodeDiv=document.getElementById("barcode");
+const currentCardInfo=document.getElementById("currentCardInfo");
+const networkNameInput=document.getElementById("networkName"), networkText=document.getElementById("networkText"), networkValueSpan=document.getElementById("networkValue"), toggleNetwork=document.getElementById("toggleNetwork");
+const categoryNameInput=document.getElementById("categoryName"), categoryText=document.getElementById("categoryText"), categoryValueSpan=document.getElementById("categoryValue"), toggleCategory=document.getElementById("toggleCategory");
+const userNumText=document.getElementById("userNumText"), passNumText=document.getElementById("passNumText"), userNumValueSpan=document.getElementById("userNumValue"), passNumValueSpan=document.getElementById("passNumValue");
+const barcodeTemplateInput=document.getElementById("barcodeTemplate");
+const btnExportPDF=document.getElementById("btnExportPDF"), btnPreparePrint=document.getElementById("btnPreparePrint");
+const networkSizeInput=document.getElementById("networkSize"), categorySizeInput=document.getElementById("categorySize"), numbersSizeInput=document.getElementById("numbersSize"), barcodeSizeInput=document.getElementById("barcodeSize"), numberColorInput=document.getElementById("numberColor"), networkColorInput=document.getElementById("networkColor"), categoryColorInput=document.getElementById("categoryColor");
+const printArea=document.getElementById("printArea");
+
+/* Bind preview */
+networkNameInput.addEventListener("input",()=>{networkValueSpan.textContent=networkNameInput.value||""});
+networkValueSpan.addEventListener("input",()=>{networkNameInput.value=networkValueSpan.textContent.trim()});
+toggleNetwork.addEventListener("change",()=>{networkText.style.display=toggleNetwork.checked?"block":"none"});
+networkSizeInput.addEventListener("input",()=>{networkText.style.fontSize=networkSizeInput.value+"px"});
+
+categoryNameInput.addEventListener("input",()=>{categoryValueSpan.textContent=categoryNameInput.value||""});
+categoryValueSpan.addEventListener("input",()=>{categoryNameInput.value=categoryValueSpan.textContent.trim()});
+categorySizeInput.addEventListener("input",()=>{categoryText.style.fontSize=categorySizeInput.value+"px"});
+categoryColorInput.addEventListener("input",()=>{categoryText.style.color=categoryColorInput.value});
+toggleCategory.addEventListener("change",()=>{categoryText.style.display=toggleCategory.checked?"block":"none"});
+
+numbersSizeInput.addEventListener("input",()=>{const s=numbersSizeInput.value+"px"; userNumText.style.fontSize=s; passNumText.style.fontSize=s});
+numberColorInput.addEventListener("input",()=>{const c=numberColorInput.value; userNumText.style.color=c; passNumText.style.color=c});
+networkColorInput.addEventListener("input",()=>{networkText.style.color=networkColorInput.value});
+
+barcodeSizeInput.addEventListener("input",()=>{updatePreviewFromData()});
+barcodeTemplateInput.addEventListener("input",()=>{updatePreviewFromData()});
+toggleBarcode.addEventListener("change",()=>{barcodeWrapper.style.display=toggleBarcode.checked?"flex":"none"; if(toggleBarcode.checked) updatePreviewFromData()});
+
+/* Excel import */
+excelInput.addEventListener("change",(e)=>{
+  const file=e.target.files[0]; if(!file) return;
+  excelStatus.textContent="جارٍ قراءة الملف..."; excelStatus.classList.remove("error");
+  const reader=new FileReader();
+  reader.onload=function(evt){
+    try{
+      const data=new Uint8Array(evt.target.result);
+      const workbook=XLSX.read(data,{type:"array"});
+      const sheet=workbook.Sheets[workbook.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(sheet,{header:1})||[]; lastRowsRaw=rows;
+      const auto=autoDetectColumns(rows);
+      if(auto.ok){ ({headerDetected,detectedUserCol,detectedPassCol}=auto); cardsData=extractUserPass(rows,headerDetected,detectedUserCol,detectedPassCol); finishImport(); }
+      else{ openMappingModal(rows); }
+    }catch(err){ console.error(err); excelStatus.textContent="حدث خطأ أثناء قراءة الملف."; excelStatus.classList.add("error"); }
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+/* Auto-detect helpers */
+function normalizeHeader(s){ if(s==null) return ""; s=String(s).trim().toLowerCase();
+  s=s.replace(/[اأإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/[^\w؀-ۿ]+/g," "); return s; }
+const userKeywords=["username","user","login","account","uname","name","اسم المستخدم","المستخدم","يوزر","اسم","حساب"];
+const passKeywords=["password","pass","pwd","secret","كلمه المرور","كلمة المرور","كلمه سر","كلمة سر","باسورد","الباس"];
+function headerIndexByKeywords(headers,keys){
+  for(let c=0;c<headers.length;c++){ const h=normalizeHeader(headers[c]);
+    for(const k of keys){ const kk=normalizeHeader(k); if(h&&(h.includes(kk))) return c; } }
+  return -1;
+}
+function isSequenceColumn(values){
+  const cleaned=[]; for(const v of values){ if(v==null) continue; const s=String(v).trim(); if(!s) continue; cleaned.push(s); if(cleaned.length>=100) break; }
+  if(!cleaned.length) return false;
+  const nums=cleaned.map(v=>{ const n=Number(String(v).replace(/[, ]/g,"")); return Number.isFinite(n)?n:NaN; });
+  const numericCount=nums.filter(Number.isFinite).length; if(numericCount/cleaned.length<0.9) return false;
+  let nonDec=0,pairs=0,prev=null; for(const n of nums){ if(!Number.isFinite(n)) continue; if(prev===null){prev=n;continue;} pairs++; if(n>=prev) nonDec++; prev=n; }
+  const orderRatio=pairs?(nonDec/pairs):0; const uniqRatio=(new Set(nums.filter(Number.isFinite))).size/numericCount;
+  let score=0; if(numericCount/cleaned.length>=0.9) score++; if(orderRatio>=0.9) score++; if(uniqRatio>=0.9) score++; return score>=2;
+}
+function autoDetectColumns(rows){
+  if(!rows||!rows.length) return {ok:false};
+  const first=rows[0]||[]; const headerLike=first.some(cell=>typeof cell==="string"&&cell&&cell.length<=40);
+  let userCol=-1,passCol=-1,hasHeader=false;
+  if(headerLike){
+    const u=headerIndexByKeywords(first,userKeywords); const p=headerIndexByKeywords(first,passKeywords);
+    if(u!==-1&&p!==-1&&u!==p){userCol=u;passCol=p;hasHeader=true;}
+  }
+  if(userCol===-1||passCol===-1){
+    const cols=Math.max(...rows.map(r=>r.length));
+    const colVals=Array.from({length:cols},(_,c)=>rows.slice(0,Math.min(rows.length,300)).map(r=>r[c]));
+    const notSeq=[]; for(let c=0;c<cols;c++){ if(!isSequenceColumn(colVals[c]||[])) notSeq.push(c); }
+    function scoreU(col){ const v=colVals[col]||[]; let t=0,s=0,n=0,c=0; for(const val of v.slice(0,100)){ if(val==null) continue; const x=String(val).trim(); if(!x) continue; c++; if(/\S/.test(x)) t++; if(x.length<=24) s++; if(!/\s{2,}/.test(x)) n++; } if(!c) return 0; return (t/c)*0.4+(s/c)*0.35+(n/c)*0.25; }
+    function scoreP(col){ const v=colVals[col]||[]; let t=0,m=0,h=0,c=0; for(const val of v.slice(0,100)){ if(val==null) continue; const x=String(val).trim(); if(!x) continue; c++; if(/\S/.test(x)) t++; if(x.length>=4&&x.length<=32) m++; if(/[^\w؀-ۿ]/.test(x)) h++; } if(!c) return 0; return (t/c)*0.4+(m/c)*0.35+(h/c)*0.25; }
+    const cand=notSeq.map(c=>({c,u:scoreU(c),p:scoreP(c)})).sort((a,b)=>(b.u+b.p)-(a.u+a.p));
+    if(cand.length){
+      const bestU=cand.slice(0,5).sort((a,b)=>b.u-a.u)[0];
+      const bestP=cand.filter(x=>x.c!==bestU.c).slice(0,5).sort((a,b)=>b.p-a.p)[0];
+      if(bestU&&bestP&&bestU.u>0.5&&bestP.p>0.5){ userCol=bestU.c; passCol=bestP.c; hasHeader=false; }
+    }
+  }
+  if(userCol!==-1&&passCol!==-1&&userCol!==passCol) return {ok:true,headerDetected:hasHeader,detectedUserCol:userCol,detectedPassCol:passCol};
+  return {ok:false};
+}
+function extractUserPass(rows,hasHeader,uCol,pCol){
+  const isHeaderToken=(val)=>{ if(val==null) return false; const s=normalizeHeader(String(val)); if(!s) return false;
+    const uh=userKeywords.some(k=>s.includes(normalizeHeader(k))); const ph=passKeywords.some(k=>s.includes(normalizeHeader(k))); return uh||ph; };
+  let startIndex=0; if(hasHeader) startIndex=1; else if(rows.length){ const first=rows[0]||[]; const u0=first[uCol], p0=first[pCol]; if(isHeaderToken(u0)||isHeaderToken(p0)) startIndex=1; }
+  const out=[]; for(let i=startIndex;i<rows.length;i++){ const r=rows[i]||[]; const u=r[uCol], p=r[pCol]; if(u==null||p==null) continue;
+    const us=String(u).trim(), ps=String(p).trim(); if(!us||!ps) continue; out.push({username:us, password:ps}); }
+  return out;
+}
+function finishImport(){ if(cardsData.length){ updatePreviewFromData(); excelStatus.textContent=`تم استيراد ${cardsData.length} بطاقة.`; alert("تم استيراد "+cardsData.length+" بطاقة."); } else { excelStatus.textContent="لم يتم العثور على بيانات صالحة."; excelStatus.classList.add("error"); } }
+
+/* Manual map modal (inline build) */
+const mapModalBackdrop=document.createElement('div'); mapModalBackdrop.className='backdrop'; document.body.appendChild(mapModalBackdrop);
+mapModalBackdrop.innerHTML=`<div class="modal"><h3>الملف غير منسق — اختر الأعمدة يدويًا</h3>
+  <div class="row"><label><input type="checkbox" id="mapHasHeader" checked> الصف الأول عناوين</label></div>
+  <div class="row" style="gap:.6rem">
+    <div><label>عمود اسم المستخدم:</label><br><select id="mapUser"></select></div>
+    <div><label>عمود كلمة المرور:</label><br><select id="mapPass"></select></div>
+  </div>
+  <div class="row"><div id="mapPreview" style="max-height:220px;overflow:auto;border:1px solid var(--border);border-radius:10px;padding:6px"></div></div>
+  <div class="row" style="justify-content:flex-end;gap:.5rem"><button id="mapCancel" class="ghost">إلغاء</button><button id="mapApply" class="primary">اعتماد</button></div>
+</div>`;
+const mapHasHeader=document.getElementById("mapHasHeader"), mapUser=document.getElementById("mapUser"),
+      mapPass=document.getElementById("mapPass"), mapPreview=document.getElementById("mapPreview"),
+      mapCancel=document.getElementById("mapCancel"), mapApply=document.getElementById("mapApply");
+function openMappingModal(rows){
+  const maxCols=Math.max(...rows.map(r=>r.length)); mapUser.innerHTML=""; mapPass.innerHTML="";
+  for(let c=0;c<maxCols;c++){
+    const samples=[]; for(let r=1;r<rows.length&&samples.length<3;r++){ const v=rows[r]?.[c]; if(v!=null&&String(v).trim()!=="") samples.push(String(v).trim()); }
+    const label=`عمود #${c+1}${samples.length?(" — أمثلة: "+samples.join(" | ")):""}`;
+    mapUser.appendChild(new Option(label,c)); mapPass.appendChild(new Option(label,c));
+  }
+  mapUser.selectedIndex=0; mapPass.selectedIndex=(maxCols>1?1:0); mapHasHeader.checked=true;
+  const rerender=()=>renderMappingPreview(rows,mapHasHeader.checked,Number(mapUser.value),Number(mapPass.value));
+  ["change"].forEach(ev=>{ mapHasHeader.addEventListener(ev,rerender); mapUser.addEventListener(ev,rerender); mapPass.addEventListener(ev,rerender); });
+  mapCancel.onclick=()=>{ mapModalBackdrop.style.display="none"; };
+  mapApply.onclick=()=>{ const uCol=Number(mapUser.value), pCol=Number(mapPass.value);
+    if(uCol===pCol){ alert("يرجى اختيار عمودين مختلفين."); return;}
+    headerDetected=mapHasHeader.checked; detectedUserCol=uCol; detectedPassCol=pCol;
+    cardsData=extractUserPass(rows,headerDetected,detectedUserCol,detectedPassCol);
+    mapModalBackdrop.style.display="none"; finishImport();
+  };
+  rerender(); mapModalBackdrop.style.display="flex";
+}
+function renderMappingPreview(rows,hasHeader,uCol,pCol){
+  const limit=Math.min(rows.length,12); let html=`<table style="width:100%;border-collapse:collapse">
+  <thead><tr><th>#</th><th>اسم المستخدم</th><th>كلمة المرور</th></tr></thead><tbody>`;
+  for(let i=0;i<limit;i++){ if(i===0&&hasHeader) continue; const r=rows[i]||[]; const u=r[uCol]??""; const p=r[pCol]??"";
+    html+=`<tr><td>${i+1}</td><td dir="ltr">${String(u)}</td><td dir="ltr">${String(p)}</td></tr>`; }
+  html+=`</tbody></table>`; mapPreview.innerHTML=html;
+}
+
+/* QR + preview */
+function buildBarcodeText(card){ if(!card) return ""; let t=barcodeTemplateInput.value||""; t=t.replace(/\{user\}/g,String(card.username)); t=t.replace(/\{pass\}/g,String(card.password)); return t; }
+function updateBarcode(text){ barcodeDiv.innerHTML=""; if(!toggleBarcode.checked||!text) return; const size=parseInt(barcodeSizeInput.value,10)||72; barcodeWrapper.style.width=size+"px"; barcodeWrapper.style.height=size+"px"; new QRCode(barcodeDiv,{text,width:size,height:size,correctLevel:QRCode.CorrectLevel.M}); }
+function updatePreviewFromData(){ if(!cardsData.length){ currentCardInfo.textContent="لم يتم تحميل بيانات بعد"; return;} const card=cardsData[0]; userNumValueSpan.textContent=card.username; passNumValueSpan.textContent=card.password; currentCardInfo.textContent=`تم تحميل ${cardsData.length} بطاقة.`; updateBarcode(buildBarcodeText(card)); }
+
+/* Template */
+templateInput.addEventListener("change",(e)=>{ const file=e.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=(evt)=>{ templateDataURL=evt.target.result; cardBgImg.src=templateDataURL; cardPreview.classList.remove("empty"); templateStatus.textContent="تم تحميل صورة القالب."; templateStatus.classList.remove("error"); }; reader.readAsDataURL(file); });
+
+/* Dragging */
+const draggables=[networkText,categoryText,userNumText,passNumText,barcodeWrapper]; let activeDrag=null, dragOffsetX=0, dragOffsetY=0;
+function startDrag(e,el){ e.preventDefault(); activeDrag=el; const rect=el.getBoundingClientRect(); const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2; const clientX=e.touches?e.touches[0].clientX:e.clientX; const clientY=e.touches?e.touches[0].clientY:e.clientY; dragOffsetX=clientX-cx; dragOffsetY=clientY-cy; cardPreview.style.cursor="grabbing"; }
+function onDrag(e){ if(!activeDrag) return; const rect=cardPreview.getBoundingClientRect(); const clientX=e.touches?e.touches[0].clientX:e.clientX; const clientY=e.touches?e.touches[0].clientY:e.clientY; let x=clientX-dragOffsetX-rect.left; let y=clientY-dragOffsetY-rect.top; x=Math.max(0,Math.min(rect.width,x)); y=Math.max(0,Math.min(rect.height,y)); activeDrag.style.left=x+"px"; activeDrag.style.top=y+"px"; }
+function endDrag(){ activeDrag=null; cardPreview.style.cursor="grab"; }
+draggables.forEach(el=>{ el.addEventListener("mousedown",e=>startDrag(e,el)); el.addEventListener("touchstart",e=>startDrag(e,el),{passive:false}); });
+window.addEventListener("mousemove",onDrag); window.addEventListener("touchmove",onDrag,{passive:false}); window.addEventListener("mouseup",endDrag); window.addEventListener("touchend",endDrag);
+
+/* PDF */
+const CARD_W_MM=210/3, CARD_H_MM=297/7, GRID_COLS=3, GRID_ROWS=7, SEP_COLOR=[0,0,0], SEP_WIDTH=0.2;
+const RENDER_W=900, RENDER_H=Math.round(RENDER_W*(CARD_H_MM/CARD_W_MM));
+function relFrom(el){ const rect=cardPreview.getBoundingClientRect(); return {left:el.offsetLeft/rect.width, top:el.offsetTop/rect.height}; }
+function loadImage(src){ return new Promise((res,rej)=>{ const img=new Image(); img.onload=()=>res(img); img.onerror=rej; img.src=src; }); }
+function makeQRDataURL(text,size){ return new Promise((resolve)=>{ const temp=document.createElement("div"); const q=new QRCode(temp,{text:text||" ",width:size,height:size,correctLevel:QRCode.CorrectLevel.M}); setTimeout(()=>{ const img=temp.querySelector("img")||temp.querySelector("canvas"); if(img&&img.toDataURL) resolve(img.toDataURL("image/png")); else if(img&&img.src) resolve(img.src); else resolve(null); },0); }); }
+async function renderCardToDataURL(card){
+  const canvas=document.createElement("canvas"); canvas.width=RENDER_W; canvas.height=RENDER_H; const ctx=canvas.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,RENDER_W,RENDER_H);
+  if(templateDataURL){ const bg=await loadImage(templateDataURL); ctx.drawImage(bg,0,0,RENDER_W,RENDER_H); }
+  const posNetwork=relFrom(networkText), posCategory=relFrom(categoryText), posUser=relFrom(userNumText), posPass=relFrom(passNumText), posQR=relFrom(barcodeWrapper);
+  const showBarcode=toggleBarcode.checked, showNetwork=toggleNetwork.checked, showCategory=toggleCategory.checked;
+  const networkTextContent=networkValueSpan.textContent, categoryTextContent=categoryValueSpan.textContent;
+  const numberColor=getComputedStyle(userNumText).color, networkColor=getComputedStyle(networkText).color, categoryColor=getComputedStyle(categoryText).color||"#000";
+  const networkFontSizePx=parseInt(getComputedStyle(networkText).fontSize,10), categoryFontSizePx=parseInt(getComputedStyle(categoryText).fontSize,10), numberFontSizePx=parseInt(getComputedStyle(userNumText).fontSize,10);
+  const scaleX=RENDER_W, scaleY=RENDER_H;
+  function drawCenteredText(text,xRel,yRel,fontPx,color,fontFamily){ if(!text) return; ctx.fillStyle=color; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.font=`700 ${Math.round(fontPx*(RENDER_W/320))}px ${fontFamily}`; ctx.fillText(text,xRel*scaleX,yRel*scaleY); }
+  if(showNetwork){ drawCenteredText(networkTextContent,posNetwork.left,posNetwork.top,networkFontSizePx,networkColor,'Arial, "Helvetica Neue", sans-serif'); }
+  if(showCategory){ drawCenteredText(categoryTextContent,posCategory.left,posCategory.top,categoryFontSizePx,categoryColor,'Arial, "Helvetica Neue", sans-serif'); }
+  ctx.font=`500 ${Math.round(numberFontSizePx*(RENDER_W/320))}px Tajawal, system-ui`; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillStyle=numberColor;
+  ctx.fillText(String(card.username), posUser.left*scaleX, posUser.top*scaleY);
+  ctx.fillText(String(card.password), posPass.left*scaleX, posPass.top*scaleY);
+  if(showBarcode){ const size=parseInt(barcodeSizeInput.value,10)||72; const sizePx=Math.round(size*(RENDER_W/320)); const qrText=(barcodeTemplateInput.value||"{user}:{pass}").replace(/\{user\}/g,String(card.username)).replace(/\{pass\}/g,String(card.password)); const qrUrl=await makeQRDataURL(qrText,sizePx); if(qrUrl){ const qrImg=await loadImage(qrUrl); ctx.drawImage(qrImg, posQR.left*scaleX-sizePx/2, posQR.top*scaleY-sizePx/2, sizePx, sizePx); } }
+  return canvas.toDataURL("image/jpeg",0.98);
+}
+async function exportPDFManual(){
+  if(!cardsData.length){ alert("يرجى استيراد ملف Excel أولاً."); return; }
+  const { jsPDF }=window.jspdf; const doc=new jsPDF({unit:"mm",format:"a4",orientation:"portrait"});
+  const perPage=GRID_COLS*GRID_ROWS; const total=cardsData.length;
+  for(let pageIndex=0; pageIndex<Math.ceil(total/perPage); pageIndex++){
+    if(pageIndex>0) doc.addPage();
+    doc.setDrawColor(...SEP_COLOR); doc.setLineWidth(SEP_WIDTH);
+    for(let c=1;c<GRID_COLS;c++){ const x=(210/GRID_COLS)*c; doc.line(x,0,x,297); }
+    for(let r=1;r<GRID_ROWS;r++){ const y=(297/GRID_ROWS)*r; doc.line(0,y,210,y); }
+    for(let i=0;i<perPage;i++){
+      const idx=pageIndex*perPage+i; if(idx>=total) break;
+      const card=cardsData[idx]; const dataURL=await renderCardToDataURL(card);
+      const col=i%GRID_COLS; const row=Math.floor(i/GRID_COLS);
+      const x=col*CARD_W_MM; const y=row*CARD_H_MM;
+      doc.addImage(dataURL,"JPEG",x,y,CARD_W_MM,CARD_H_MM);
+    }
+  }
+  doc.save("cards.pdf");
+}
+
+/* Prepare print pages */
+async function preparePrintPages(){
+  if(!cardsData.length){ alert("يرجى استيراد ملف Excel أولاً."); return; }
+  printArea.innerHTML="";
+  const perPage=GRID_COLS*GRID_ROWS; const total=cardsData.length;
+  const SHEET_W=2480, SHEET_H=3508; const CARD_W=Math.floor(SHEET_W/GRID_COLS), CARD_H=Math.floor(SHEET_H/GRID_ROWS);
+  for(let pageIndex=0; pageIndex<Math.ceil(total/perPage); pageIndex++){
+    const canvas=document.createElement("canvas"); canvas.width=SHEET_W; canvas.height=SHEET_H;
+    const ctx=canvas.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,SHEET_W,SHEET_H);
+    for(let i=0;i<perPage;i++){ const idx=pageIndex*perPage+i; if(idx>=total) break;
+      const dataURL=await renderCardToDataURL(cardsData[idx]); const img=await loadImage(dataURL);
+      const col=i%GRID_COLS; const row=Math.floor(i/GRID_COLS); const x=col*CARD_W; const y=row*CARD_H;
+      ctx.drawImage(img, x, y, CARD_W, CARD_H);
+    }
+    const sheetURL=canvas.toDataURL("image/jpeg",0.98);
+    const page=document.createElement("div"); page.className="print-page";
+    const sheetImg=document.createElement("img"); sheetImg.className="sheet-img"; sheetImg.src=sheetURL;
+    page.appendChild(sheetImg); printArea.appendChild(page);
+  }
+}
+btnExportPDF.addEventListener("click",exportPDFManual);
+btnPreparePrint.addEventListener("click",async ()=>{ await preparePrintPages(); window.print(); });
+
+/* Initial state */
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById('year').textContent = new Date().getFullYear();
+  barcodeWrapper.style.display=toggleBarcode.checked?"flex":"none";
+  userNumText.style.color=numberColorInput.value; passNumText.style.color=numberColorInput.value;
+  networkText.style.color=networkColorInput.value; categoryText.style.color=categoryColorInput.value||"#fff";
+  categoryText.style.display=toggleCategory.checked?"block":"none";
+});
+</script>
+</body>
+</html>
