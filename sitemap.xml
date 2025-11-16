@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://hosamgrebe.github.io/H-blog/</loc></url>
-  <url><loc>https://hosamgrebe.github.io/H-blog/main.html</loc></url>
-  <url><loc>https://hosamgrebe.github.io/H-blog/network.html</loc></url>
-  <url><loc>https://hosamgrebe.github.io/H-blog/hotspot-generator.html</loc></url>
+  <url>
+    <loc>https://hosamgrebe.github.io/H-blog/</loc>
+    <lastmod>2025-11-16</lastmod>
+  </url>
+  <url>
+    <loc>https://hosamgrebe.github.io/H-blog/main.html</loc>
+    <lastmod>2025-11-16</lastmod>
+  </url>
+  <url>
+    <loc>https://hosamgrebe.github.io/H-blog/network.html</loc>
+    <lastmod>2025-11-16</lastmod>
+  </url>
+  <url>
+    <loc>https://hosamgrebe.github.io/H-blog/hotspot-generator.html</loc>
+    <lastmod>2025-11-16</lastmod>
+  </url>
 </urlset>
-
