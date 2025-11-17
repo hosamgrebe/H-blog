@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الصفحة الرئيسية - مدونة حسام غريبي</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- ===================== NEW: SEO أساسيات ===================== -->
+  <meta name="description" content="الصفحة الرئيسية لمدونة حسام غريبي (Hosam Ghribi): شروحات الشبكات والهوت سبوت وأدوات تقنية مجانية." />
+  <meta name="keywords" content="حسام غريبي, Hosam Ghribi, مدونة, شبكات, هوت سبوت, hotspot, تقنية, إنترنت, أدوات" />
+  <meta name="author" content="حسام غريبي (Hosam Ghribi)" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://hosamgrebe.github.io/H-blog/main.html" />
+  <meta name="theme-color" content="#0f172a" />
+  <!-- =================== /NEW: SEO أساسيات ====================== -->
+
+  <!-- ===================== NEW: بطاقات المشاركة (Social) ===================== -->
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_AR" />
+  <meta property="og:title" content="الصفحة الرئيسية - مدونة حسام غريبي" />
+  <meta property="og:description" content="شروحات الشبكات والهوت سبوت وأدوات تقنية مجانية." />
+  <meta property="og:url" content="https://hosamgrebe.github.io/H-blog/main.html" />
+  <meta property="og:site_name" content="مدونة حسام غريبي" />
+  <!-- غيّر المسار إذا عندك صورة غلاف -->
+  <meta property="og:image" content="https://hosamgrebe.github.io/H-blog/assets/cover.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="الصفحة الرئيسية - مدونة حسام غريبي" />
+  <meta name="twitter:description" content="شروحات الشبكات والهوت سبوت وأدوات تقنية مجانية." />
+  <meta name="twitter:image" content="https://hosamgrebe.github.io/H-blog/assets/cover.jpg" />
+
+  <!-- hreflang -->
+  <link rel="alternate" href="https://hosamgrebe.github.io/H-blog/main.html" hreflang="ar" />
+  <link rel="alternate" href="https://hosamgrebe.github.io/H-blog/main.html" hreflang="x-default" />
+  <!-- =================== /NEW: بطاقات المشاركة ====================== -->
+
+  <!-- ===================== NEW: Structured Data ===================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "حسام غريبي",
+    "alternateName": ["Hosam Ghribi", "Hossam Ghribi", "Hosam Grebi"],
+    "url": "https://hosamgrebe.github.io/H-blog/",
+    "sameAs": [
+      "https://github.com/hosamgrebe"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"الصفحة الرئيسية - مدونة حسام غريبي",
+    "url":"https://hosamgrebe.github.io/H-blog/main.html",
+    "isPartOf":{
+      "@type":"WebSite",
+      "name":"مدونة حسام غريبي",
+      "url":"https://hosamgrebe.github.io/H-blog/"
+    },
+    "inLanguage":"ar",
+    "about":{
+      "@type":"Thing",
+      "name":"شبكات, هوت سبوت, تقنية"
+    }
+  }
+  </script>
+  <!-- =================== /NEW: Structured Data ====================== -->
+
+  <style>
+    :root{
+      --bg1:#0f172a;
+      --bg2:#1d2843;
+      --accent2:#38bdf8;
+      --accent3:#a855f7;
+      --text-main:#f9fafb;
+      --text-soft:#e5e7eb;
+      --card-bg:rgba(15,23,42,0.7);
+      --card-border:rgba(148,163,184,0.4);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:'Cairo',sans-serif;
+      min-height:100vh;
+      padding:16px;
+      color:var(--text-main);
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,0.35), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(168,85,247,0.35), transparent 55%),
+        radial-gradient(circle at top right, rgba(34,197,94,0.35), transparent 55%),
+        linear-gradient(135deg,var(--bg1),var(--bg2));
+      background-size:160% 160%;
+      animation:bgMove 18s ease-in-out infinite;
+      padding-bottom:60px;
+    }
+
+    @keyframes bgMove{
+      0%{background-position:0% 0%;}
+      50%{background-position:100% 100%;}
+      100%{background-position:0% 0%;}
+    }
+
+    .page{max-width:1000px;margin:0 auto;}
+
+    /* الشريط العلوي */
+    .navbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 16px;
+      border-radius:18px;
+      background:rgba(15,23,42,0.85);
+      border:1px solid var(--card-border);
+      backdrop-filter:blur(18px);
+      box-shadow:0 12px 30px rgba(15,23,42,0.9);
+      margin-bottom:22px;
+    }
+
+    .nav-title{
+      font-weight:800;
+      font-size:18px;
+      background:linear-gradient(90deg,var(--accent2),var(--accent3));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .nav-link{
+      font-size:14px;
+      padding:6px 14px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.5);
+      background:rgba(15,23,42,0.9);
+      color:var(--text-soft);
+      text-decoration:none;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+
+    .nav-link:hover{
+      border-color:var(--accent2);
+      color:var(--text-main);
+    }
+
+    .nav-link.active{
+      background:linear-gradient(135deg,var(--accent2),var(--accent3));
+      border-color:transparent;
+      color:white;
+      box-shadow:0 10px 26px rgba(56,189,248,0.5);
+    }
+
+    /* المحتوى الرئيسي */
+    .main-card{
+      margin-top:18px;
+      border-radius:26px;
+      padding:26px 20px 24px;
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      backdrop-filter:blur(18px);
+      box-shadow:0 18px 45px rgba(15,23,42,0.85);
+    }
+
+    .page-heading{font-size:clamp(22px,4vw,30px);margin-bottom:8px;}
+    .page-subtitle{font-size:15px;color:var(--text-soft);margin-bottom:22px;opacity:.9;}
+
+    /* الأقسام */
+    .sections-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+    }
+
+    .section-btn{
+      position:relative;
+      border-radius:18px;
+      padding:16px 14px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.92);
+      text-align:right;
+      transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .section-btn:hover{transform:translateY(-2px);border-color:var(--accent2);}
+    .section-btn.primary{
+      border-color:transparent;
+      background:linear-gradient(135deg,var(--accent2),var(--accent3));
+      color:white;
+      box-shadow:0 18px 40px rgba(56,189,248,0.55);
+    }
+    .section-title{font-weight:700;font-size:16px;margin-bottom:6px;}
+    .section-desc{font-size:13px;color:var(--text-soft);line-height:1.7;}
+    .section-btn.primary .section-desc{color:white;}
+    a.section-link{text-decoration:none;color:inherit;display:block;}
+
+    /* تذييل */
+    .footer{
+      margin-top:40px;
+      padding:18px 12px;
+      border-top:1px solid var(--card-border);
+      text-align:center;
+      color:var(--text-soft);
+      background:rgba(15,23,42,0.85);
+      border-radius:18px;
+      backdrop-filter:blur(12px);
+      box-shadow:0 -10px 30px rgba(15,23,42,0.7);
+    }
+
+    /* نافذة منبثقة عامة */
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.6);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      z-index:100;
+      visibility:hidden;
+      opacity:0;
+      transition:opacity .3s ease, visibility .3s ease;
+    }
+
+    .modal.active{visibility:visible;opacity:1;}
+
+    .modal-content{
+      background:rgba(15,23,42,0.95);
+      border:1px solid var(--card-border);
+      border-radius:20px;
+      padding:24px;
+      text-align:center;
+      max-width:320px;
+      box-shadow:0 18px 45px rgba(15,23,42,0.9);
+    }
+
+    .modal h2{
+      background:linear-gradient(90deg,var(--accent2),var(--accent3));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-size:20px;
+      margin-bottom:10px;
+    }
+
+    .modal p{
+      font-size:14px;
+      color:var(--text-soft);
+      line-height:1.7;
+    }
+
+    .close-btn{
+      margin-top:16px;
+      background:linear-gradient(135deg,var(--accent2),var(--accent3));
+      border:none;
+      color:white;
+      padding:8px 20px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    @media(max-width:600px){
+      .navbar{flex-direction:column;align-items:flex-start;gap:10px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <!-- الشريط العلوي -->
+    <header class="navbar">
+      <div class="nav-title">الصفحة الرئيسية</div>
+      <nav class="nav-links">
+        <a href="‏‏index.html" class="nav-link">صفحة الترحيب</a>
+        <a href="main.html" class="nav-link active">الصفحة الرئيسية</a>
+        <span class="nav-link" id="aboutBtn">عن المدونة</span>
+        <span class="nav-link" id="contactBtn">تواصل معنا</span>
+      </nav>
+    </header>
+
+    <!-- المحتوى -->
+    <main class="main-card">
+      <h1 class="page-heading">الأقسام الرئيسية للمدونة</h1>
+      <p class="page-subtitle">اختر أحد الأقسام التالية. يمكنك البدء بمولد كروت الهوت سبوت.</p>
+
+      <div class="sections-grid">
+
+        <!-- مولد كروت الهوت سبوت -->
+        <a href="hotspot-generator.html" class="section-link">
+          <div class="section-btn primary">
+            <div class="section-title">مولد كروت الهوت سبوت</div>
+            <div class="section-desc">أداة لإنشاء كروت هوت سبوت بسرعة وسهولة. تعمل على الكمبيوتر والهاتف.</div>
+          </div>
+        </a>
+
+        <!-- قسم الشبكات -->
+        <a href="network.html" class="section-link">
+          <div class="section-btn">
+            <div class="section-title">قسم الشبكات والإنترنت</div>
+            <div class="section-desc">شروحات الشبكات، الهوت سبوت، وحلول الإنترنت وتحسين الأداء.</div>
+          </div>
+        </a>
+
+        <!-- قسم السيرفرات -->
+        <a href="#" class="section-link">
+          <div class="section-btn">
+            <div class="section-title">قسم شروحات السيرفرات</div>
+            <div class="section-desc">دروس في إعداد السيرفرات، إدارة المستخدمين وربط الخدمات.</div>
+          </div>
+        </a>
+
+        <!-- قسم الأدوات -->
+        <a href="#" class="section-link">
+          <div class="section-btn">
+            <div class="section-title">قسم أدوات وبرامج مفيدة</div>
+            <div class="section-desc">مجموعة من الأدوات المجانية لمساعدتك في عملك التقني اليومي.</div>
+          </div>
+        </a>
+
+      </div>
+    </main>
+
+    <!-- تذييل -->
+    <footer class="footer">
+      <p>© <span id="year"></span> جميع الحقوق محفوظة — <strong>حسام غريبي</strong></p>
+    </footer>
+  </div>
+
+  <!-- نافذة عن المدونة -->
+  <div class="modal" id="aboutModal">
+    <div class="modal-content">
+      <h2>عن المدونة</h2>
+      <p>مدونة حسام غريبي مصممة خصيصًا لأصحاب الشبكات لتسهيل العمل وتوفير كل شيء مدفوع هنا بشكل مجاني تمامًا.</p>
+      <button class="close-btn" onclick="closeModal('aboutModal')">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- نافذة تواصل معنا -->
+  <div class="modal" id="contactModal">
+    <div class="modal-content">
+      <h2>تواصل مع حسام غريبي</h2>
+      <p>📞 رقم الاتصال السوري: <strong>00963930760718</strong><br>
+         💬 واتساب: <a href="https://wa.me/963930760718" target="_blank" style="color:var(--accent2);text-decoration:none;">اضغط هنا للتواصل عبر واتساب</a>
+      </p>
+      <button class="close-btn" onclick="closeModal('contactModal')">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- ================= NEW: تحسين الوصول بدون جافاسكربت ================= -->
+  <noscript>هذه الصفحة تعمل حتى بدون الجافاسكربت. يمكنك زيارة
+    <a href="hotspot-generator.html">مولد كروت الهوت سبوت</a> أو
+    <a href="network.html">قسم الشبكات</a>.
+  </noscript>
+  <!-- =============== /NEW ================= -->
+
+  <script>
+    // تحديث السنة
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // التحكم بالنوافذ
+    const aboutBtn = document.getElementById("aboutBtn");
+    const contactBtn = document.getElementById("contactBtn");
+    const aboutModal = document.getElementById("aboutModal");
+    const contactModal = document.getElementById("contactModal");
+
+    aboutBtn.onclick = ()=> aboutModal.classList.add("active");
+    contactBtn.onclick = ()=> contactModal.classList.add("active");
+
+    function closeModal(id){
+      document.getElementById(id).classList.remove("active");
+    }
+
+    // إغلاق عند الضغط خارج النافذة
+    window.onclick = e=>{
+      if(e.target.classList.contains("modal")) e.target.classList.remove("active");
+    }
+  </script>
+</body>
+</html>
