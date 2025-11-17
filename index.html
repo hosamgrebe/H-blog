@@ -13,7 +13,7 @@
   <!-- فافيكون -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-  <!-- ===================== SEO & Social (كما هي للنشر على جوجل) ===================== -->
+  <!-- ===================== SEO & Social (للنشر على جوجل) ===================== -->
   <meta name="description" content="مدونة حسام غريبي (Hosam Ghribi): مقالات حول الشبكات، الهوت سبوت، والتقنية.">
   <meta name="robots" content="index,follow">
   <meta name="author" content="حسام غريبي (Hosam Ghribi)">
@@ -106,7 +106,7 @@
 
     .wrapper{
       width:100%;
-      max-width:540px;           /* مناسب للموبايل والكمبيوتر */
+      max-width:540px;
     }
 
     .card{
@@ -118,16 +118,6 @@
       box-shadow:0 16px 40px rgba(15,23,42,0.9);
       text-align:center;
       overflow:hidden;
-    }
-
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background:radial-gradient(circle at top,rgba(56,189,248,0.22),transparent 55%);
-      opacity:0.7;
-      pointer-events:none;
-      z-index:-1;
     }
 
     .badge{
@@ -148,7 +138,7 @@
       box-shadow:0 0 8px rgba(34,197,94,0.9);
     }
 
-    /* الصورة – حجم أصغر للرأس وملائم للموبايل */
+    /* الصورة – تأكد أن المسار صحيح: assets/profile.jpg */
     .avatar{
       width:128px;
       height:128px;
@@ -165,20 +155,17 @@
       border-radius:50%;
       object-fit:cover;
       object-position:center top;
-      transform:scale(0.94);
       display:block;
     }
 
-    /* العنوان الرئيسي */
     .main-title{
-      font-size:clamp(20px, 2.7vw, 24px); /* صغير على الموبايل ومناسب على الكمبيوتر */
+      font-size:clamp(20px, 2.7vw, 24px);
       font-weight:800;
       color:#e5f0ff;
       margin-bottom:6px;
       letter-spacing:0.3px;
     }
 
-    /* خط سفلي بسيط تحت العنوان */
     .title-underline{
       width:110px;
       height:2px;
@@ -188,7 +175,6 @@
       opacity:0.9;
     }
 
-    /* السطر الملون (المدونة قيد الإنشاء حاليًا) */
     .subtitle{
       font-size:14px;
       font-weight:600;
@@ -199,7 +185,6 @@
       color:transparent;
     }
 
-    /* يمكنك الدخول الآن */
     .status{
       font-size:13px;
       color:var(--text-soft);
@@ -220,14 +205,6 @@
       transition:transform .15s ease,box-shadow .15s ease,filter .15s ease;
       box-shadow:0 10px 26px rgba(15,23,42,0.9);
       outline:none;
-    }
-    .enter-btn::before{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      border-radius:inherit;
-      border:1px solid rgba(248,250,252,0.4);
-      pointer-events:none;
     }
     .enter-btn:hover{
       transform:translateY(-1px);
@@ -254,32 +231,12 @@
     }
 
     @media (min-width:768px){
-      .card{
-        padding:28px 26px 24px;
-      }
-      .main-title{
-        font-size:22px;
-      }
-      .subtitle{
-        font-size:15px;
-      }
-      .status,
-      .designer-text{
-        font-size:13.5px;
-      }
+      .card{padding:28px 26px 24px;}
     }
 
     @media (max-width:360px){
-      .card{
-        padding:20px 14px 18px;
-      }
-      .avatar{
-        width:112px;
-        height:112px;
-      }
-      .main-title{
-        font-size:19px;
-      }
+      .card{padding:20px 14px 18px;}
+      .avatar{width:112px;height:112px;}
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -296,7 +253,8 @@
       </div>
 
       <div class="avatar">
-        <img src="photo_2025-11-17_22-31-30.jpg" alt="حسام غريبي">
+        <!-- هنا المسار الصحيح للصورة على GitHub Pages -->
+        <img src="assets/profile.jpg" alt="حسام غريبي">
       </div>
 
       <h1 class="main-title">أهلاً بكم في مدونة حسام غريبي</h1>
