@@ -7,24 +7,25 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-  <!-- ===================== NEW: SEO أساسيات ===================== -->
+  <!-- ===================== SEO أساسيات ===================== -->
   <meta name="description" content="الصفحة الرئيسية لمدونة حسام غريبي (Hosam Ghribi): شروحات الشبكات والهوت سبوت وأدوات تقنية مجانية." />
   <meta name="keywords" content="حسام غريبي, Hosam Ghribi, مدونة, شبكات, هوت سبوت, hotspot, تقنية, إنترنت, أدوات" />
   <meta name="author" content="حسام غريبي (Hosam Ghribi)" />
   <meta name="robots" content="index,follow" />
-  <link rel="canonical" href="https://hosamgrebe.github.io/H-blog/main.html" />
+  <!-- مهم: نحدث canonical إلى home.html -->
+  <link rel="canonical" href="https://hosamgrebe.github.io/H-blog/home.html" />
   <meta name="theme-color" content="#0f172a" />
-  <!-- =================== /NEW: SEO أساسيات ====================== -->
+  <!-- =================== /SEO أساسيات ====================== -->
 
-  <!-- ===================== NEW: بطاقات المشاركة (Social) ===================== -->
+  <!-- ===================== بطاقات المشاركة (Social) ===================== -->
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ar_AR" />
   <meta property="og:title" content="الصفحة الرئيسية - مدونة حسام غريبي" />
   <meta property="og:description" content="شروحات الشبكات والهوت سبوت وأدوات تقنية مجانية." />
-  <meta property="og:url" content="https://hosamgrebe.github.io/H-blog/main.html" />
+  <meta property="og:url" content="https://hosamgrebe.github.io/H-blog/home.html" />
   <meta property="og:site_name" content="مدونة حسام غريبي" />
-  <!-- غيّر المسار إذا عندك صورة غلاف -->
+  <!-- غيّر المسار إذا عندك صورة غلاف حقيقية -->
   <meta property="og:image" content="https://hosamgrebe.github.io/H-blog/assets/cover.jpg" />
 
   <!-- Twitter -->
@@ -34,11 +35,11 @@
   <meta name="twitter:image" content="https://hosamgrebe.github.io/H-blog/assets/cover.jpg" />
 
   <!-- hreflang -->
-  <link rel="alternate" href="https://hosamgrebe.github.io/H-blog/main.html" hreflang="ar" />
-  <link rel="alternate" href="https://hosamgrebe.github.io/H-blog/main.html" hreflang="x-default" />
-  <!-- =================== /NEW: بطاقات المشاركة ====================== -->
+  <link rel="alternate" href="https://hosamgrebe.github.io/H-blog/home.html" hreflang="ar" />
+  <link rel="alternate" href="https://hosamgrebe.github.io/H-blog/home.html" hreflang="x-default" />
+  <!-- =================== /بطاقات المشاركة ====================== -->
 
-  <!-- ===================== NEW: Structured Data ===================== -->
+  <!-- ===================== Structured Data ===================== -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -57,7 +58,7 @@
     "@context":"https://schema.org",
     "@type":"WebPage",
     "name":"الصفحة الرئيسية - مدونة حسام غريبي",
-    "url":"https://hosamgrebe.github.io/H-blog/main.html",
+    "url":"https://hosamgrebe.github.io/H-blog/home.html",
     "isPartOf":{
       "@type":"WebSite",
       "name":"مدونة حسام غريبي",
@@ -70,7 +71,7 @@
     }
   }
   </script>
-  <!-- =================== /NEW: Structured Data ====================== -->
+  <!-- =================== /Structured Data ====================== -->
 
   <style>
     :root{
@@ -282,8 +283,10 @@
     <header class="navbar">
       <div class="nav-title">الصفحة الرئيسية</div>
       <nav class="nav-links">
-        <a href="‏‏index.html" class="nav-link">صفحة الترحيب</a>
-        <a href="main.html" class="nav-link active">الصفحة الرئيسية</a>
+        <!-- هنا شلت الرموز الغريبة وخلّيتها index.html عادي -->
+        <a href="index.html" class="nav-link">صفحة الترحيب</a>
+        <!-- ونبّهت الرابط إلى home.html بدل main.html -->
+        <a href="home.html" class="nav-link active">الصفحة الرئيسية</a>
         <span class="nav-link" id="aboutBtn">عن المدونة</span>
         <span class="nav-link" id="contactBtn">تواصل معنا</span>
       </nav>
@@ -357,12 +360,11 @@
     </div>
   </div>
 
-  <!-- ================= NEW: تحسين الوصول بدون جافاسكربت ================= -->
+  <!-- تحسين الوصول بدون جافاسكربت -->
   <noscript>هذه الصفحة تعمل حتى بدون الجافاسكربت. يمكنك زيارة
     <a href="hotspot-generator.html">مولد كروت الهوت سبوت</a> أو
     <a href="network.html">قسم الشبكات</a>.
   </noscript>
-  <!-- =============== /NEW ================= -->
 
   <script>
     // تحديث السنة
